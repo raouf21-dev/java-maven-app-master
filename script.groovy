@@ -22,11 +22,22 @@ def buildImage() {
 }
 
 def deployApp() {
-    echo 'deploying the application...'
+    environement {
+        AWS_ACCESS_KEY_ID = credentials('jenkins_aws_access_key_id')
+        AWS_SECRET_ACCESS_KEY = credentials('jenkins_aws_secret_access_key')
+        APP_NAME = 'java-maven-app'
+    }
+    steps {
+        script{
+            echo 'deploying the application...'
+            sh 'envsubst < k8s/deployment.yaml | kubectl apply -f -'
+            sh 'envsubst < k8s/service.yaml | kubectl apply -f -'
+        }
+    }
 }
 
 def commitToGithub(){
-    withCredentials([usernamePassword(credentialsId: 'eks-jenkins', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+    withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
         sh 'git config --global user.email "raouf_devops@gmail.com"'
         sh 'git config --global user.name "Raouf"'
         sh '''
