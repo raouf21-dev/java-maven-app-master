@@ -43,10 +43,10 @@ def commitToGithub(){
         sh '''
             git config --global credential.helper '!f() { echo username=$USER; echo password=$PASS; }; f'
             git remote set-url origin https://github.com/raouf21-dev/java-maven-app-master.git
-            git pull origin main --rebase
+            git pull origin jenkins-jobs
             git add .
             git commit -m "ci: version bump"
-            git push origin HEAD:main
+            git push origin HEAD:jenkins-jobs
         '''
     }
 }
