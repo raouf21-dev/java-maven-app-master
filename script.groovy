@@ -27,14 +27,14 @@ def deployApp() {
 
 def commitToGithub(){
     withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-        sh 'git config --global user.email "raouf_devops@gmail.com" '
+        sh 'git config --global user.email "raouf_devops@gmail.com"'
         sh 'git config --global user.name "Raouf"'
         sh '''
-
-            git remote set-url origin https://${USER}:${PASS}@github.com/raouf21-dev/java-maven-app-master.git"
-            git add .'
-            git commit -m "ci: version bump"'
-            git push origin HEAD:main'
+            git config --global credential.helper '!f() { echo username=$USER; echo password=$PASS; }; f'
+            git remote set-url origin https://github.com/raouf21-dev/java-maven-app-master.git
+            git add .
+            git commit -m "ci: version bump"
+            git push origin HEAD:main
         '''
     }
 }
