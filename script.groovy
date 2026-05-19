@@ -26,7 +26,7 @@ def deployApp() {
 }
 
 def commitToGithub(){
-    withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+    withCredentials([usernamePassword(credentialsId: 'eks-jenkins', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
         sh 'git config --global user.email "raouf_devops@gmail.com"'
         sh 'git config --global user.name "Raouf"'
         sh '''
