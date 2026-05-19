@@ -39,11 +39,24 @@ pipeline {
         stage("deploy") {
             // steps {
             //     script {
-                    gv.deployApp()
+            //         gv.deployApp()
             //     }
             // }
+            
+            environment {
+                    AWS_ACCESS_KEY_ID = credentials('jenkins_aws_access_key_id')
+                    AWS_SECRET_ACCESS_KEY = credentials('jenkins_aws_secret_access_key')
+                    APP_NAME = 'java-maven-app'
+                }
+                steps {
+                    script{
+                        echo 'deploying the application...'
+                        sh 'envsubst < k8s/deployment.yaml | kubectl apply -f -'
+                        sh 'envsubst < k8s/service.yaml | kubectl apply -f -'
+                    }
+                }
         }    
-
+        
         stage("Commit to Github"){
             steps{
                 script{
