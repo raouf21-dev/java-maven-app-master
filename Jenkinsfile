@@ -37,13 +37,13 @@ pipeline {
         }
 
         stage("deploy") {
-            steps {
-                script {
+            // steps {
+            //     script {
                     gv.deployApp()
-                }
-            }
+            //     }
+            // }
         }    
-        
+
         stage("Commit to Github"){
             steps{
                 script{
