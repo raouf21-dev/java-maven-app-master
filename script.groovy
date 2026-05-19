@@ -25,4 +25,13 @@ def deployApp() {
     echo 'deploying the application...'
 }
 
+def commitToGithub(){
+    withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+        sh "git remote set-url origin https://${USER}:${PASS}@github.com/raouf21-dev/java-maven-app-master.git"
+        sh 'git add .'
+        sh 'git commit -m "ci: version bump"'
+        sh 'git push origin HEAD:main'
+    }
+}
+
 return this

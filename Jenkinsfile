@@ -42,6 +42,14 @@ pipeline {
                     gv.deployApp()
                 }
             }
-        }               
+        }    
+        
+        stage("Commit to Github"){
+            steps{
+                script{
+                    gv.commitToGithub()
+                }
+            }
+        }
     }
 } 
