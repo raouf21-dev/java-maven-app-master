@@ -27,9 +27,8 @@ def incrementVersion(){
 def buildImage() {
     echo "building the docker image..."
     withCredentials([usernamePassword(credentialsId: 'ecr-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-        sh "aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 705754325868.dkr.ecr.eu-west-3.amazonaws.com"
         sh "docker build -t ${env.DOCKER_REPO}:${env.IMAGE_NAME} ."
-        sh 'echo $PASS | docker login -u $USER --password-stdin'
+        sh 'echo $PASS | docker login -u $USER --password-stdin 705754325868.dkr.ecr.eu-west-3.amazonaws.com'
         sh "docker push ${env.DOCKER_REPO}:${env.IMAGE_NAME}"
     }
 }
