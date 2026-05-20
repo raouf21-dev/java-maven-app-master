@@ -18,7 +18,7 @@ spec:
         - name: aws-registry-key
       containers:
         - name: $APP_NAME
-          image: santana20095/demo-app:$IMAGE_NAME
+          image: 705754325868.dkr.ecr.eu-west-3.amazonaws.com/java-maven-app:$IMAGE_NAME
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
