@@ -28,10 +28,9 @@ def buildImage() {
     echo "building the docker image..."
     withCredentials([usernamePassword(credentialsId: 'ecr-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
         sh "aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 705754325868.dkr.ecr.eu-west-3.amazonaws.com"
-        sh "docker build -t java-maven-app ."
-        sh "docker tag java-maven-app:latest 705754325868.dkr.ecr.eu-west-3.amazonaws.com/java-maven-app:${env.IMAGE_NAME}"
-        // sh 'echo $PASS | docker login -u $USER --password-stdin'
-        sh "docker push 705754325868.dkr.ecr.eu-west-3.amazonaws.com/java-maven-app:${env.IMAGE_NAME}"
+        sh "docker build -t ${env.DOCKER_REPO}:${env.IMAGE_NAME} ."
+        sh 'echo $PASS | docker login -u $USER --password-stdin'
+        sh "docker push ${env.DOCKER_REPO}:${env.IMAGE_NAME}"
     }
 }
 
