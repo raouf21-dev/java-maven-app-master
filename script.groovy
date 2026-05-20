@@ -27,8 +27,9 @@ def incrementVersion(){
 def buildImage() {
     echo "building the docker image..."
     withCredentials([usernamePassword(credentialsId: 'ecr-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-        sh "docker build -t 705754325868.dkr.ecr.eu-west-3.amazonaws.com/java-maven-app:${env.IMAGE_NAME} ."
-        sh 'echo $PASS | docker login -u $USER --password-stdin'
+        sh "docker build -t java-maven-app ."
+        sh "docker tag java-maven-app:latest 705754325868.dkr.ecr.eu-west-3.amazonaws.com/java-maven-app:${env.IMAGE_NAME}"
+        // sh 'echo $PASS | docker login -u $USER --password-stdin'
         sh "docker push 705754325868.dkr.ecr.eu-west-3.amazonaws.com/java-maven-app:${env.IMAGE_NAME}"
     }
 }
