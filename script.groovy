@@ -28,7 +28,7 @@ def buildImage() {
     echo "building the docker image..."
     withCredentials([usernamePassword(credentialsId: 'ecr-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
         sh "docker build -t ${env.DOCKER_REPO}:${env.IMAGE_NAME} ."
-        sh 'echo $PASS | docker login -u $USER --password-stdin 705754325868.dkr.ecr.eu-west-3.amazonaws.com'
+        sh 'echo $PASS | docker login -u $USER --password-stdin ${DOCKER_SERVER}'
         sh "docker push ${env.DOCKER_REPO}:${env.IMAGE_NAME}"
     }
 }
